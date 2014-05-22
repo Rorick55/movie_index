@@ -3,7 +3,6 @@
   <head>
     <title>Movie</title>
   </head>
-
   <body>
     <p><a href="/movies">Back to movies</a></p>
     <% @movies.each do |movie| %>
@@ -16,6 +15,5 @@
         <p>Synopsis: <%= movie[:synopsis] %></p>
       <% end %>
     <% end %>
-
   </body>
 </html>

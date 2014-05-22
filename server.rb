@@ -24,16 +24,17 @@ def get_20_movies (page_number, all_movies)
   all_movies[index..index + 19]
 end
 
-
 get '/' do
   redirect '/movies'
 end
 
 get '/movies' do
   @page_number = params[:page] || 1
-
+  if @page_number.to_i <= 1
+    @return_page = 1
+  else
     @return_page = @page_number.to_i - 1
-
+  end
   @movies = get_20_movies(@page_number.to_i, movies_array)
   @page_number = @page_number.to_i + 1
 
@@ -53,13 +54,10 @@ get '/search' do
   movie_hash = movies_array
   @movies = []
    movie_hash.each do |movie|
-
     if movie[:title].downcase.include? params['query'].downcase
      @movies << movie
     end
-
-end
-
-erb :search
+  end
+  erb :search
 end
 

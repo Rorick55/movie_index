@@ -15,7 +15,7 @@
     <ul>
     <% @movies.each do |movie| %>
       <li><a href= "/<%="#{movie[:title]}"%>/<%="#{movie[:id]}"%>"><%= movie[:title] %></a></li>
-      <% end %>
+    <% end %>
     </ul>
   </body>
 </html>
