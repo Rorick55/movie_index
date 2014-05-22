@@ -31,11 +31,9 @@ end
 
 get '/movies' do
   @page_number = params[:page] || 1
-  if params[:page] == 1
-    @return_page == @page_number
-  else
+
     @return_page = @page_number.to_i - 1
-  end
+
   @movies = get_20_movies(@page_number.to_i, movies_array)
   @page_number = @page_number.to_i + 1
 
