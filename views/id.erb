@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Movie</title>
+  </head>
+
+  <body>
+    <p><a href="/movies">Back to movies</a></p>
+    <% @movies.each do |movie| %>
+      <% if movie[:id] == params[:id] %>
+        <h1><%= movie[:title] %></h1>
+        <p>Year: <%= movie[:year] %></p>
+        <p>Genre: <%= movie[:genre] %></p>
+        <p>Rating: <%= movie[:rating] %></p>
+        <p>Studio: <%= movie[:studio] %></p>
+        <p>Synopsis: <%= movie[:synopsis] %></p>
+      <% end %>
+    <% end %>
+
+  </body>
+</html>
