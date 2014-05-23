@@ -2,16 +2,20 @@
 <html lang="en">
   <head>
     <title>Movies</title>
+    <link rel="stylesheet" href="home.css" />
   </head>
-
   <body>
-    <h1>Movies</h1>
-    <p><a href="/movies">Back to movies</a></p>
+    <div style="float:right;">
     <form action="/search" method="get">
     <label for="query">Search: </label>
     <input type="text" name="query" id="query" />
     <input type="submit" value="Search" />
     </form>
+    </div>
+    <p><a href="/movies">Back to movies</a></p>
+    </div>
+    <h1>Movies</h1>
+
     <ul>
     <% @movies.each do |movie| %>
       <li><a href= "/<%="#{movie[:title]}"%>/<%="#{movie[:id]}"%>"><%= movie[:title] %></a></li>
