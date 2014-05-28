@@ -16,14 +16,19 @@
     </div>
 
     <% @movies.each do |movie| %>
-      <% if movie['id'] == params[:id] %>
         <h1><%= movie['title'] %></h1>
         <p>Year: <%= movie['year'] %></p>
         <p>Genre: <%= movie['genre'] %></p>
         <p>Rating: <%= movie['rating'] %></p>
         <p>Studio: <%= movie['studio'] %></p>
         <p>Synopsis: <%= movie['synopsis'] %></p>
-      <% end %>
+        <p>Actors:</p>
+        <ul>
+        <% @actors.each do |actor| %>
+            <li><a href="/actors/<%="#{actor['actor']}"%>/<%="#{actor['id']}"%>"><%= actor['actor']%></a> --- <%= actor['character']%></li>
+          <%end%>
+        </ul>
+
     <% end %>
 
   </body>

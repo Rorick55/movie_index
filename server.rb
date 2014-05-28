@@ -31,7 +31,9 @@ get '/movies' do
     @return_page = @page_number.to_i - 1
   end
   movies = db_connection do |conn|
-    conn.exec('SELECT title, id FROM movies;')
+    conn.exec("SELECT movies.title, movies.id, movies.year, movies.rating, genres.name AS genre,
+      studios.name AS studio, movies.synopsis FROM movies LEFT OUTER JOIN genres ON genres.id = movies.genre_id
+      JOIN studios ON studios.id = movies.studio_id ORDER BY movies.title;")
   end
   @movies = get_20_movies(@page_number.to_i, movies.to_a)
   @page_number = @page_number.to_i + 1
@@ -39,38 +41,57 @@ get '/movies' do
   erb :'movies/index'
 end
 
-get '/:title/:id' do
+get '/movies/:title/:id' do
   movies = db_connection do |conn|
-    conn.exec('SELECT movies.title, movies.id, movies.year, movies.rating, genres.name AS genre, studios.name AS studio, movies.synopsis FROM movies LEFT OUTER JOIN genres ON genres.id = movies.genre_id JOIN studios ON studios.id = movies.studio_id;')
+    conn.exec("SELECT movies.title, movies.id, movies.year, movies.rating, genres.name AS genre,
+      studios.name AS studio, movies.synopsis FROM movies LEFT OUTER JOIN genres ON genres.id = movies.genre_id
+      JOIN studios ON studios.id = movies.studio_id WHERE movies.id = '#{params[:id]}';")
     end
-  actors = db_connection do |conn|
-    conn.exec('SELECT movies.title, actors.name AS actor, cast_members.character FROM movies JOIN actors ON movies.actor_id = actors.id JOIN cast_members ON actors.id = cast_members.actor_id;')
+  movie_actors = db_connection do |conn|
+    conn.exec("SELECT movies.title, actors.id, actors.name AS actor, cast_members.character
+      FROM cast_members JOIN actors ON cast_members.actor_id = actors.id
+      JOIN movies ON movies.id = cast_members.movie_id WHERE movies.id = '#{params[:id]}';")
     end
-  @actors = actors.to_a
+  @actors = movie_actors.to_a
   @movies = movies.to_a
   @movies.find do |each_hash|
-    each_hash[:title] == params[:title]
-    each_hash[:id] == params[:id]
+    each_hash['title'] == params[:title]
+    each_hash['id'] == params[:id]
   end
 
   erb :'movies/show'
 end
 
-get 'actors' do
+get '/actors' do
     @page_number = params[:page] || 1
   if @page_number.to_i <= 1
     @return_page = 1
   else
     @return_page = @page_number.to_i - 1
   end
-  movies = db_connection do |conn|
-    conn.exec('SELECT title, id FROM movies;')
+  actors = db_connection do |conn|
+    conn.exec('SELECT name, id FROM actors ORDER BY name;')
   end
-  @movies = get_20_movies(@page_number.to_i, movies.to_a)
+  @actors = get_20_movies(@page_number.to_i, actors.to_a)
   @page_number = @page_number.to_i + 1
 
-  erb :'movies/index'
+  erb :'actors/index'
 end
+
+get '/actors/:name/:id' do
+  actors = db_connection do |conn|
+      conn.exec("SELECT actors.name, actors.id, movies.title, movies.id AS movie_id, cast_members.character
+        FROM cast_members JOIN actors ON actors.id = cast_members.actor_id JOIN movies
+        ON movies.id = cast_members.movie_id WHERE actors.id = '#{params[:id]}';")
+      end
+
+    @actors = actors.to_a
+    @actors.find do |each_hash|
+      each_hash['name'] == params[:name]
+      each_hash['id'] == params[:id]
+    end
+  erb :'actors/show'
+  end
 
 get '/search' do
 

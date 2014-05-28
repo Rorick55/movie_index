@@ -13,11 +13,25 @@
     </form>
     </div>
     <h1>Movies</h1>
-    <ul>
+    <table style="width:1100px;text-align:left;">
+      <tr>
+        <td>Title:</td>
+        <td>Year:</td>
+        <td>Rating:</td>
+        <td>Genre:</td>
+        <td>Studio:</td>
+      </tr>
+
     <% @movies.each do |movie| %>
-      <li><a href= "/<%="#{movie['title']}"%>/<%="#{movie['id']}"%>"><%= movie["title"] %></a></li>
+      <tr>
+        <td><a href="/movies/<%="#{movie['title']}"%>/<%="#{movie['id']}"%>"><%= movie["title"] %></a></td>
+        <td><%= movie['year'] %></td>
+        <td><%= movie['rating'] %></td>
+        <td><%= movie['genre'] %></td>
+        <td><%= movie['studio'] %></td>
+        </tr>
     <% end %>
-    </ul>
+    </table>
     <a href="/movies?page=<%= @return_page %>">Page <%= @return_page %></a>
     <a href="/movies?page=<%= @page_number %>">Page <%= @page_number %></a>
   </body>

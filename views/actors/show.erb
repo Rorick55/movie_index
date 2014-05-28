@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Actors</title>
+    <link rel="stylesheet" href="home.css" />
+  </head>
+  <body>
+    <div style="float:right;">
+    <form action="/search" method="get">
+    <label for="query">Search: </label>
+    <input type="text" name="query" id="query" />
+    <input type="submit" value="Search" />
+    </form>
+    </div>
+    <p><a href="/actors">Back to actors</a></p>
+    </div>
+    <h1><%= params[:name] %></h1>
+        <ol>
+        <% @actors.each do |actor| %>
+            <li><a href="/movies/<%="#{actor['title']}"%>/<%="#{actor['movie_id']}"%>"><%= actor['title'] %></a>
+                <ul>
+                    <li><%= actor['character']%></li>
+                </ul>
+            </li>
+          <%end%>
+        </ol>
+  </body>
+</html>
