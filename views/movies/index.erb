@@ -5,13 +5,21 @@
     <link rel="stylesheet" href="home.css" />
   </head>
   <body>
-    <div style="float:right;">
-    <form action="/search" method="get">
-    <label for="query">Search: </label>
-    <input type="text" name="query" id="query" />
-    <input type="submit" value="Search" />
+ <div style="float:right;">
+    <form action="/search/movies" method="get">
+      <label for="query_m">Search Movies: </label>
+      <input type="text" name="query_m" id="query_m" />
+      <input type="submit" value="Search" />
+    </form>
+    <form action="/search/actors" method="get">
+      <label for="query_a">Search Actors: </label>
+      <input type="text" name="query_a" id="query_a" />
+      <input type="submit" value="Search" />
     </form>
     </div>
+    <p><a href="/movies">Back to movies</a></p>
+    <p><a href="/actors">Back to actors</a></p>
+
     <h1>Movies</h1>
     <table style="width:1100px;text-align:left;">
       <tr>
@@ -24,7 +32,7 @@
 
     <% @movies.each do |movie| %>
       <tr>
-        <td><a href="/movies/<%="#{movie['title']}"%>/<%="#{movie['id']}"%>"><%= movie["title"] %></a></td>
+        <td><a href="/movies/<%="#{movie['id']}"%>"><%= movie["title"] %></a></td>
         <td><%= movie['year'] %></td>
         <td><%= movie['rating'] %></td>
         <td><%= movie['genre'] %></td>

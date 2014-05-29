@@ -6,14 +6,20 @@
   </head>
   <body>
     <div style="float:right;">
-    <form action="/search" method="get">
-    <label for="query">Search: </label>
-    <input type="text" name="query" id="query" />
-    <input type="submit" value="Search" />
+    <form action="/search/movies" method="get">
+      <label for="query_m">Search Movies: </label>
+      <input type="text" name="query_m" id="query_m" />
+      <input type="submit" value="Search" />
+    </form>
+    <form action="/search/actors" method="get">
+      <label for="query_a">Search Actors: </label>
+      <input type="text" name="query_a" id="query_a" />
+      <input type="submit" value="Search" />
     </form>
     </div>
     <p><a href="/movies">Back to movies</a></p>
-    </div>
+    <p><a href="/actors">Back to actors</a></p>
+
 
     <% @movies.each do |movie| %>
         <h1><%= movie['title'] %></h1>
@@ -25,7 +31,7 @@
         <p>Actors:</p>
         <ul>
         <% @actors.each do |actor| %>
-            <li><a href="/actors/<%="#{actor['actor']}"%>/<%="#{actor['id']}"%>"><%= actor['actor']%></a> --- <%= actor['character']%></li>
+            <li><a href="/actors/<%="#{actor['id']}"%>"><%= actor['actor']%></a> --- <%= actor['character']%></li>
           <%end%>
         </ul>
 

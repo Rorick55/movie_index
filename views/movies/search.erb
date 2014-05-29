@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Actors</title>
+    <title>Movies</title>
     <link rel="stylesheet" href="home.css" />
   </head>
   <body>
@@ -19,14 +19,14 @@
     </div>
     <p><a href="/movies">Back to movies</a></p>
     <p><a href="/actors">Back to actors</a></p>
+    <h1>Movie Search</h1>
 
-    <h1>Actors</h1>
     <ul>
-    <% @actors.each do |actor| %>
-      <li><a href= "/actors/<%="#{actor['id']}"%>"><%= actor["name"] %></a></li>
+    <% @movies.each do |movie| %>
+      <li><a href= "/movies/<%="#{movie['id']}"%>"><%= movie["title"] %></a></li>
     <% end %>
     </ul>
-    <a href="/actors?page=<%= @return_page %>">Page <%= @return_page %></a>
-    <a href="/actors?page=<%= @page_number %>">Page <%= @page_number %></a>
+    <a href="/search/movies?page=<%= @return_page %>">Page <%= @return_page %></a>
+    <a href="/search/movies?page=<%= @page_number %>">Page <%= @page_number %></a>
   </body>
 </html>
